@@ -6,32 +6,22 @@
       <el-input v-model.lazy.number="grossIncome.value"></el-input>
       6ヵ月定期代の1ヵ月相当額
       <el-input v-model.lazy.number="commuterPassCost.value"></el-input>
-      <el-button type="primary" @click="toTable" :disabled="!grossIncome.validate || !commuterPassCost.validate">算出</el-button>
+      <el-button type="primary" @click="toTable" :disabled="!validateOk">算出</el-button>
     </div>
     <div v-show="isTable">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column
-          prop="date"
-          label="Date"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="Name"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="Address">
-        </el-table-column>
-      </el-table>
+      <el-button type="primary" @click="toForm">戻る</el-button>
+      <value-table :grossIncomeValue="grossIncome.value" :commuterPassCostValue="commuterPassCost.value"/>
     </div>
   </div>
 </template>
 
 <script>
+import ValueTable from '~/components/ValueTable.vue'
 
 export default {
+  components : {
+    ValueTable
+  },
   data () {
     return {
       grossIncome : {
@@ -43,15 +33,6 @@ export default {
         validate : false
       },
       isTable : false,
-      tableData: [{
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles'
-      }, {
-        date: '2016-05-02',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles'
-      }]
     }
   },
   watch : {
@@ -62,9 +43,17 @@ export default {
       this.commuterPassCost.validate = this.moneyValidate(val, false)
     }
   },
+  computed : {
+    validateOk () {
+      return this.grossIncome.validate && this.commuterPassCost.validate
+    }
+  },
   methods : {
     moneyValidate (val, isRelative) {
       return val !== "" && Number.isInteger(val) && (val >= 0 || isRelative)
+    },
+		toForm () {
+			this.isTable = false
     },
 		toTable () {
 			this.isTable = true
