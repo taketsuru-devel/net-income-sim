@@ -40,16 +40,31 @@
 </template>
 
 <script>
-
+import calcMethodsMixin from '~/mixins/calcMethodsMixin.js'
 export default {
+  mixins: [calcMethodsMixin],
   props : [
-    "grossIncomeValue",
-    "commuterPassCostValue",
+    'grossIncomeValue',
+    'commuterPassCostValue',
   ],
   data () {
     return {
+      tableKeys : [
+        'grossIncome',         //月額報酬
+        'commuterPassCost',    //交通費
+        'employmentInsurance', //雇用保険
+        'welfarePension',      //厚生年金
+        'healthInsurance',     //健康保険
+        'incomeTax',           //所得税
+        'municipalTax',        //住民税
+        'netIncome',           //手取り
+        'netIncomeWithoutCom', //手取り(交通費除外)
+        'companyCost' //会社支出
+      ],
+
       tableData: [
         {
+          key: 'grossIncome',
           group: '額面',
           type: '標準月額報酬',
           value0: '100',
@@ -57,6 +72,7 @@ export default {
           value2: '300',
         },
         {
+          key: 'commuterPassCost',
           group: '額面',
           type: '1ヵ月交通費',
           value0: '10',
@@ -64,6 +80,7 @@ export default {
           value2: '30',
         },
         {
+          key: 'employmentInsurance',
           group: '天引き',
           type: '雇用保険',
           value0: '1',
@@ -71,6 +88,7 @@ export default {
           value2: '3',
         },
         {
+          key: 'welfarePension',
           group: '天引き',
           type: '厚生年金',
           value0: '1',
@@ -78,6 +96,7 @@ export default {
           value2: '3',
         },
         {
+          key: 'healthInsurance',
           group: '天引き',
           type: '健康保険',
           value0: '1',
@@ -85,6 +104,7 @@ export default {
           value2: '3',
         },
         {
+          key: 'incomeTax',
           group: '天引き',
           type: '所得税',
           value0: '1',
@@ -92,6 +112,7 @@ export default {
           value2: '3',
         },
         {
+          key: 'municipalTax',
           group: '天引き',
           type: '住民税',
           value0: '1',
@@ -99,6 +120,7 @@ export default {
           value2: '3',
         },
         {
+          key: 'netIncome',
           group: '手取り',
           type: '',
           value0: '1',
@@ -106,6 +128,7 @@ export default {
           value2: '3',
         },
         {
+          key: 'netIncomeWithoutCom',
           group: '手取り(交通費除外)',
           type: '',
           value0: '1',
@@ -113,6 +136,7 @@ export default {
           value2: '3',
         },
         {
+          key: 'companyCost',
           group: '会社支出',
           type: '',
           value0: '1',
@@ -154,6 +178,9 @@ export default {
         };
       }
     }
+  },
+  mounted () {
+    console.log(this.calcAll(this.grossIncomeValue, this.commuterPassCostValue))
   }
 }
 </script>

@@ -8,7 +8,7 @@
       <el-input v-model.lazy.number="commuterPassCost.value"></el-input>
       <el-button type="primary" @click="toTable" :disabled="!validateOk">算出</el-button>
     </div>
-    <div v-show="isTable">
+    <div v-if="isTable">
       <el-button type="primary" @click="toForm">戻る</el-button>
       <value-table :grossIncomeValue="grossIncome.value" :commuterPassCostValue="commuterPassCost.value"/>
     </div>
