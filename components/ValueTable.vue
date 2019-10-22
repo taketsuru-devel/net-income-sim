@@ -180,7 +180,11 @@ export default {
     }
   },
   mounted () {
-    console.log(this.calcAll(this.grossIncomeValue, this.commuterPassCostValue))
+    const current = this.calcAll(this.grossIncomeValue, this.commuterPassCostValue)
+    this.tableData.forEach((column) => {
+      column.value0 = current[column.key]
+    })
+
   }
 }
 </script>
