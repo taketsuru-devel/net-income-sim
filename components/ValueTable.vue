@@ -22,11 +22,19 @@
       prop="value1"
       label="カスタム1"
       width="120">
+      <template slot-scope="scope">
+        <el-input v-if="scope.$index <= 1" v-model="scope.row.value1"/>
+        <template v-else>{{ scope.row.value1 }}</template>
+      </template>
     </el-table-column>
     <el-table-column
       prop="value2"
       label="カスタム2"
       width="120">
+      <template slot-scope="scope">
+        <el-input v-if="scope.$index <= 1" v-model="scope.row.value2"/>
+        <template v-else>{{ scope.row.value2 }}</template>
+      </template>
     </el-table-column>
   </el-table>
 </template>
