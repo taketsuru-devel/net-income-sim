@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column
         prop="value2"
-        label="カスタム2"
+        :label="columnData[1].name"
         width="140">
         <template slot="header" slot-scope="scope">
           {{scope.column.label}}
@@ -75,8 +75,8 @@ export default {
         'companyCost' //会社支出
       ],
       columnData : [
-        {name : 'カスタム1', grossIncome:0, commuterPassCost:0, memo:''},
-        {name : 'カスタム2', grossIncome:0, commuterPassCost:0, memo:''},
+        {name : 'カスタム1', grossIncome:0, commuterPassCost:0, memo:'', _column:'value1'},
+        {name : 'カスタム2', grossIncome:0, commuterPassCost:0, memo:'', _column:'value2'},
       ],
       tableData: [
         {
@@ -162,20 +162,6 @@ export default {
       ]
     }
   },
-  watch : {
-    "tableData.0.value1" (val, old) {
-      //this.updateColumn(this.grossIncomeValue, val, this.commuterPassCostValue, this.tableData[0]["value2"], 'value1')
-    },
-    "tableData.1.value1" (val, old) {
-      console.log(val)
-    },
-    "tableData.0.value2" (val, old) {
-      console.log(val)
-    },
-    "tableData.1.value2" (val, old) {
-      console.log(val)
-    },
-  },
   methods : {
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       //決め打ち
@@ -218,18 +204,17 @@ export default {
     editColumn (idx) {
       this.$refs.ColumnDialog.showDialog(this.columnData[idx], idx)
     },
-    saveColumn (column) { //from child
-      console.log(column)
-      this.columnData[0]['name'] = column.name
-      this.columnData[0]['grossIncome'] = column.grossIncome
-      this.columnData[0]['commuterPassCost'] = column.commuterPassCost
-      this.columnData[0]['memo'] = column.memo
-      this.updateColumn(this.grossIncomeValue, this.columnData[0]['grossIncome'], this.commuterPassCostValue, this.columnData[0]['commuterPassCost'], 'value1')
+    saveColumn (column, idx) { //from child
+      this.columnData[idx]['name'] = column.name
+      this.columnData[idx]['grossIncome'] = column.grossIncome
+      this.columnData[idx]['commuterPassCost'] = column.commuterPassCost
+      this.columnData[idx]['memo'] = column.memo
+      this.updateColumn(this.grossIncomeValue, this.columnData[idx]['grossIncome'], this.commuterPassCostValue, this.columnData[idx]['commuterPassCost'], this.columnData[idx]['_column'])
     }
   },
   mounted () {
     this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value0')
-    this.updateColumn(this.grossIncomeValue, this.columnData[0]['grossIncome'], this.commuterPassCostValue, null, 'value1')
+    this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value1')
     this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value2')
   }
 }
