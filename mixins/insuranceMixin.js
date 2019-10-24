@@ -35,7 +35,7 @@ export default {
       } else {
         baseCost = (table[i-1] + table[i]) / 2
       }
-      let ret = Math.floor(baseCost * 0.00915)
+      let ret = Math.floor(baseCost * 0.0915)
       if (IsCompany) {
         //事業主のみ
         //子ども・子育て拠出金率 0.34%
