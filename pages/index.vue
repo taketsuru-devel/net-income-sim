@@ -6,6 +6,8 @@
       <el-input v-model.lazy.number="grossIncome.value"></el-input>
       6ヵ月定期代の1ヵ月相当額
       <el-input v-model.lazy.number="commuterPassCost.value"></el-input>
+      年齢
+      <el-input v-model.lazy.number="age"></el-input>
       <el-button type="primary" @click="toTable" :disabled="!validateOk">算出</el-button>
     </div>
     <div v-if="isTable">
@@ -32,6 +34,7 @@ export default {
         value : "",
         validate : false
       },
+      age : 30,
       isTable : false,
     }
   },
