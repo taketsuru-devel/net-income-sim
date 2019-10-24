@@ -1,4 +1,6 @@
+import taxMixin from "~/mixins/taxMixin.js"
 export default {
+  mixins : [taxMixin],
   methods : {
     evalDiff (base, diff) {
       if (diff == "" || diff == null) {
@@ -33,11 +35,9 @@ export default {
       //42.5 / 1000 折半
       //介護保険後回し
       ret['healthInsurance'] = parseInt(baseCost * 42.5 / 1000)
-      //給与所得オンリー、累進、復興特別所得税、各種控除は後回し
-      const incomeBase = Math.max((ret['grossIncome']*12) - 380000, 0) //基礎控除
-      ret['incomeTax'] = incomeBase * 0.2 / 12 //ざっくり
-      //所得税での控除とは項目は同じだが額が微妙に違う
-      ret['municipalTax'] = Math.max((ret['grossIncome']*12 -330000), 0) * 0.2 / 12 //ざっくり
+
+      //所得税、住民税
+      Object.assign(ret, this.calcTax(ret))
 
       ret['netIncome'] = baseCost
                        - ret['employmentInsurance']
