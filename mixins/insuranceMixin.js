@@ -33,6 +33,7 @@ export default {
       } else if (i >= table.length) {
         baseCost = 620000
       } else {
+        //TODO 幅が変わるところでこの方法は通じない
         baseCost = (table[i-1] + table[i]) / 2
       }
       let ret = Math.floor(baseCost * 0.0915)
@@ -59,6 +60,7 @@ export default {
       } else if (i >= table.length) {
         baseCost = 1390000
       } else {
+        //TODO 幅が変わるところでこの方法は通じない
         baseCost = (table[i-1] + table[i]) / 2
       }
       let ret = Math.floor(baseCost * 42.5 / 1000)

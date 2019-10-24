@@ -197,7 +197,6 @@ export default {
     },
     updateColumn (gross, gdiff, commuterPass, cdiff, dest) {
       const current = this.calcAll(gross, gdiff, commuterPass, cdiff, this.age)
-      console.log(current)
       this.tableData.forEach((column) => {
         column[dest] = current[column.key]
       })
