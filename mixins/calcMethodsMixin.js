@@ -1,9 +1,27 @@
 export default {
   methods : {
-    calcAll (grossIncome, commuterPassCost, grossDiff, commuterDiff) {
+    evalDiff (base, diff) {
+      if (diff == "" || diff == null) {
+        return parseInt(base)
+      } else if (/^[\+\-]\d+$/.test(diff)) {
+        let ret = parseInt(base) + parseInt(diff)
+        if (ret <= 0) ret = 0
+        return ret
+      } else if (/^\d+$/.test(diff)) {
+        return parseInt(diff)
+      } else {
+        return null
+      }
+    },
+    calcAll (grossIncome, grossDiff, commuterPassCost, commuterDiff) {
+      const gross = this.evalDiff(grossIncome, grossDiff)
+      const commuterPass = this.evalDiff(commuterPassCost, commuterDiff)
+      if (gross === null || commuterPass === null) {
+        return {}
+      }
       let ret = {
-        'grossIncome' : grossIncome,
-        'commuterPassCost' : commuterPassCost
+        'grossIncome' : gross,
+        'commuterPassCost' : commuterPass,
       }
       const baseCost = ret['grossIncome'] + ret['commuterPassCost']
       //https://jsite.mhlw.go.jp/tokyo-hellowork/content/contents/000403878.pdf

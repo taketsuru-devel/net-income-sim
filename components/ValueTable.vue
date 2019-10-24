@@ -1,47 +1,60 @@
 <template>
- <el-table
-    :data="tableData"
-    :span-method="objectSpanMethod"
-    style="width: 100%">
-    <el-table-column
-      prop="group"
-      label="分類"
-      width="80">
-    </el-table-column>
-    <el-table-column
-      prop="type"
-      label="項目"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      prop="value0"
-      label="現状"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      prop="value1"
-      label="カスタム1"
-      width="120">
-      <template slot-scope="scope">
-        <el-input v-if="scope.$index <= 1" v-model="scope.row.value1"/>
-        <template v-else>{{ scope.row.value1 }}</template>
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="value2"
-      label="カスタム2"
-      width="120">
-      <template slot-scope="scope">
-        <el-input v-if="scope.$index <= 1" v-model="scope.row.value2"/>
-        <template v-else>{{ scope.row.value2 }}</template>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-table
+      :data="tableData"
+      :span-method="objectSpanMethod"
+      style="width: 100%">
+      <el-table-column
+        prop="group"
+        label="分類"
+        width="80">
+      </el-table-column>
+      <el-table-column
+        prop="type"
+        label="項目"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="value0"
+        label="現状"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="value1"
+        :label="columnData[0].name"
+        width="140">
+        <template slot="header" slot-scope="scope">
+          {{scope.column.label}}
+          <el-button type="primary" icon="el-icon-edit" circle @click="editColumn(0)"/>
+        </template>
+        <template slot-scope="scope">
+          <el-input v-if="scope.$index <= -1" v-model.lazy="scope.row.value1"/>
+          <template v-else>{{ scope.row.value1 }}</template>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="value2"
+        label="カスタム2"
+        width="140">
+        <template slot="header" slot-scope="scope">
+          {{scope.column.label}}
+          <el-button type="primary" icon="el-icon-edit" circle @click="editColumn(1)"/>
+        </template>
+        <template slot-scope="scope">
+          <el-input v-if="scope.$index <= -1" v-model.lazy="scope.row.value2"/>
+          <template v-else>{{ scope.row.value2 }}</template>
+        </template>
+      </el-table-column>
+    </el-table>
+    <ColumnDialog ref="ColumnDialog" @saveColumn="saveColumn"/>
+  </div>
 </template>
 
 <script>
 import calcMethodsMixin from '~/mixins/calcMethodsMixin.js'
+import ColumnDialog from '~/components/ColumnDialog.vue'
 export default {
+  components : {ColumnDialog},
   mixins: [calcMethodsMixin],
   props : [
     'grossIncomeValue',
@@ -61,7 +74,10 @@ export default {
         'netIncomeWithoutCom', //手取り(交通費除外)
         'companyCost' //会社支出
       ],
-
+      columnData : [
+        {name : 'カスタム1', grossIncome:0, commuterPassCost:0, memo:''},
+        {name : 'カスタム2', grossIncome:0, commuterPassCost:0, memo:''},
+      ],
       tableData: [
         {
           key: 'grossIncome',
@@ -146,6 +162,20 @@ export default {
       ]
     }
   },
+  watch : {
+    "tableData.0.value1" (val, old) {
+      //this.updateColumn(this.grossIncomeValue, val, this.commuterPassCostValue, this.tableData[0]["value2"], 'value1')
+    },
+    "tableData.1.value1" (val, old) {
+      console.log(val)
+    },
+    "tableData.0.value2" (val, old) {
+      console.log(val)
+    },
+    "tableData.1.value2" (val, old) {
+      console.log(val)
+    },
+  },
   methods : {
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       //決め打ち
@@ -177,14 +207,30 @@ export default {
           colspan: 0
         };
       }
+    },
+    updateColumn (gross, gdiff, commuterPass, cdiff, dest) {
+      const current = this.calcAll(gross, gdiff, commuterPass, cdiff)
+      console.log(current)
+      this.tableData.forEach((column) => {
+        column[dest] = current[column.key]
+      })
+    },
+    editColumn (idx) {
+      this.$refs.ColumnDialog.showDialog(this.columnData[idx], idx)
+    },
+    saveColumn (column) { //from child
+      console.log(column)
+      this.columnData[0]['name'] = column.name
+      this.columnData[0]['grossIncome'] = column.grossIncome
+      this.columnData[0]['commuterPassCost'] = column.commuterPassCost
+      this.columnData[0]['memo'] = column.memo
+      this.updateColumn(this.grossIncomeValue, this.columnData[0]['grossIncome'], this.commuterPassCostValue, this.columnData[0]['commuterPassCost'], 'value1')
     }
   },
   mounted () {
-    const current = this.calcAll(this.grossIncomeValue, this.commuterPassCostValue)
-    this.tableData.forEach((column) => {
-      column.value0 = current[column.key]
-    })
-
+    this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value0')
+    this.updateColumn(this.grossIncomeValue, this.columnData[0]['grossIncome'], this.commuterPassCostValue, null, 'value1')
+    this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value2')
   }
 }
 </script>
