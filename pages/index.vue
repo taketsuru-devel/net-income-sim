@@ -4,8 +4,7 @@
       <init-form :grossIncome="grossIncome" :commuterPassCost="commuterPassCost" @submitdata="showTable"/>
     </div>
     <div v-else>
-      <el-button type="primary" @click="toForm">戻る</el-button>
-      <value-table :grossIncomeValue="grossIncome" :commuterPassCostValue="commuterPassCost"/>
+      <value-table :grossIncomeValue="grossIncome" :commuterPassCostValue="commuterPassCost" @showform="showForm"/>
     </div>
   </div>
 </template>
@@ -27,7 +26,7 @@ export default {
     }
   },
   methods : {
-		toForm () {
+		showForm () {
 			this.isTable = false
     },
 		showTable (initData) {

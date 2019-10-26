@@ -17,7 +17,11 @@
       <el-table-column
         prop="value0"
         label="現状"
-        width="80">
+        width="100">
+        <template slot="header" slot-scope="scope">
+          {{scope.column.label}}
+          <el-button type="primary" icon="el-icon-edit" circle @click="showForm"/>
+        </template>
         <template slot-scope="scope">
           <diff-disp-cell :after="scope.row.value0"/>
         </template>
@@ -202,6 +206,9 @@ export default {
       this.tableData.forEach((column) => {
         column[dest] = current[column.key]
       })
+    },
+    showForm () {
+      this.$emit('showform')
     },
     editColumn (idx) {
       this.$refs.ColumnDialog.showDialog(this.columnData[idx], idx)
