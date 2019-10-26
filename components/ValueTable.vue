@@ -17,7 +17,10 @@
       <el-table-column
         prop="value0"
         label="現状"
-        width="120">
+        width="80">
+        <template slot-scope="scope">
+          <diff-disp-cell :after="scope.row.value0"/>
+        </template>
       </el-table-column>
       <el-table-column
         prop="value1"
@@ -28,8 +31,7 @@
           <el-button type="primary" icon="el-icon-edit" circle @click="editColumn(0)"/>
         </template>
         <template slot-scope="scope">
-          <el-input v-if="scope.$index <= -1" v-model.lazy="scope.row.value1"/>
-          <template v-else>{{ scope.row.value1 }}</template>
+          <diff-disp-cell :base="tableData[scope.$index].value0" :after="scope.row.value1" :positiveTrue="positiveTrueCal(scope.$index)"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,8 +43,7 @@
           <el-button type="primary" icon="el-icon-edit" circle @click="editColumn(1)"/>
         </template>
         <template slot-scope="scope">
-          <el-input v-if="scope.$index <= -1" v-model.lazy="scope.row.value2"/>
-          <template v-else>{{ scope.row.value2 }}</template>
+          <diff-disp-cell :base="tableData[scope.$index].value0" :after="scope.row.value2"/>
         </template>
       </el-table-column>
     </el-table>
@@ -53,8 +54,9 @@
 <script>
 import calcMethodsMixin from '~/mixins/calcMethodsMixin.js'
 import ColumnDialog from '~/components/ColumnDialog.vue'
+import DiffDispCell from '~/components/DiffDispCell.vue'
 export default {
-  components : {ColumnDialog},
+  components : {ColumnDialog, DiffDispCell},
   mixins: [calcMethodsMixin],
   props : [
     'age',
@@ -210,6 +212,9 @@ export default {
       this.columnData[idx]['commuterPassCost'] = column.commuterPassCost
       this.columnData[idx]['memo'] = column.memo
       this.updateColumn(this.grossIncomeValue, this.columnData[idx]['grossIncome'], this.commuterPassCostValue, this.columnData[idx]['commuterPassCost'], this.columnData[idx]['_column'])
+    },
+    positiveTrueCal (index) {
+      return [2,3,4,5,6,9].indexOf(index) == -1
     }
   },
   mounted () {
