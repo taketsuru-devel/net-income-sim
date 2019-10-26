@@ -31,7 +31,7 @@
           <el-button type="primary" icon="el-icon-edit" circle @click="editColumn(0)"/>
         </template>
         <template slot-scope="scope">
-          <diff-disp-cell :base="tableData[scope.$index].value0" :after="scope.row.value1" :positiveTrue="positiveTrueCal(scope.$index)"/>
+          <diff-disp-cell :base="tableData[scope.$index].value0" :after="scope.row.value1"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -213,9 +213,6 @@ export default {
       this.columnData[idx]['memo'] = column.memo
       this.updateColumn(this.grossIncomeValue, this.columnData[idx]['grossIncome'], this.commuterPassCostValue, this.columnData[idx]['commuterPassCost'], this.columnData[idx]['_column'])
     },
-    positiveTrueCal (index) {
-      return [2,3,4,5,6,9].indexOf(index) == -1
-    }
   },
   mounted () {
     this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value0')
