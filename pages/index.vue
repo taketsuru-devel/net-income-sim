@@ -1,64 +1,39 @@
 <template>
   <div class="container">
-    <div v-show="!isTable">
-      message
-      標準報酬月額
-      <el-input v-model.lazy.number="grossIncome.value"></el-input>
-      6ヵ月定期代の1ヵ月相当額
-      <el-input v-model.lazy.number="commuterPassCost.value"></el-input>
-      年齢
-      <el-input v-model.lazy.number="age"></el-input>
-      <el-button type="primary" @click="toTable" :disabled="!validateOk">算出</el-button>
+    <div v-if="!isTable">
+      <init-form :grossIncome="grossIncome" :commuterPassCost="commuterPassCost" @submitdata="showTable"/>
     </div>
-    <div v-if="isTable">
+    <div v-else>
       <el-button type="primary" @click="toForm">戻る</el-button>
-      <value-table :grossIncomeValue="grossIncome.value" :commuterPassCostValue="commuterPassCost.value"/>
+      <value-table :grossIncomeValue="grossIncome" :commuterPassCostValue="commuterPassCost"/>
     </div>
   </div>
 </template>
 
 <script>
+import InitForm from '~/components/InitForm.vue'
 import ValueTable from '~/components/ValueTable.vue'
 
 export default {
   components : {
-    ValueTable
+    InitForm, ValueTable
   },
   data () {
     return {
-      grossIncome : {
-        value : "",
-        validate : false
-      },
-      commuterPassCost : {
-        value : "",
-        validate : false
-      },
+      grossIncome: 0,
+      commuterPassCost: 0,
       age : 30,
       isTable : false,
     }
   },
-  watch : {
-    "grossIncome.value" (val,old) {
-      this.grossIncome.validate = this.moneyValidate(val, false)
-    },
-    "commuterPassCost.value" (val,old) {
-      this.commuterPassCost.validate = this.moneyValidate(val, false)
-    }
-  },
-  computed : {
-    validateOk () {
-      return this.grossIncome.validate && this.commuterPassCost.validate
-    }
-  },
   methods : {
-    moneyValidate (val, isRelative) {
-      return val !== "" && Number.isInteger(val) && (val >= 0 || isRelative)
-    },
 		toForm () {
 			this.isTable = false
     },
-		toTable () {
+		showTable (initData) {
+      this.grossIncome = initData.grossIncome
+      this.commuterPassCost = initData.commuterPassCost
+      this.age = initData.age
 			this.isTable = true
     }
   }
