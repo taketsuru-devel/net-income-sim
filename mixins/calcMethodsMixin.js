@@ -15,8 +15,8 @@ export default {
       }
     },
     calcAll (grossIncome, grossDiff, commuterPassCost, commuterDiff, age) {
-      const gross = this.evalDiff(grossIncome, grossDiff)
-      const commuterPass = this.evalDiff(commuterPassCost, commuterDiff)
+      const gross = Math.min(this.evalDiff(grossIncome, grossDiff), 1000000)
+      const commuterPass = Math.min(this.evalDiff(commuterPassCost, commuterDiff), 150000)
       if (gross === null || commuterPass === null) {
         return {}
       }
