@@ -11,6 +11,11 @@
         <template slot-scope="scope">
           {{scope.row.group}}
           <el-button icon="el-icon-search" v-if="scope.$index == 3" @click="showNotice"/>
+          <template v-if="scope.$index == 10">
+            <el-popover title="会社支出で増加する額" content="健康保険は組合が定める割合+αを、雇用保険と厚生年金は被保険者と同額を負担しています。(労使折半)" placement="top-start" trigger="hover">
+              <el-badge value="注" slot="reference"/>
+            </el-popover>
+          </template>
         </template>
       </el-table-column>
       <el-table-column
