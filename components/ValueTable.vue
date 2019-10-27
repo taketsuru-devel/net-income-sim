@@ -8,6 +8,10 @@
         prop="group"
         label="分類"
         width="80">
+        <template slot-scope="scope">
+          {{scope.row.group}}
+          <el-button icon="el-icon-search" v-if="scope.$index == 2" @click="showNotice"/>
+        </template>
       </el-table-column>
       <el-table-column
         prop="type"
@@ -52,6 +56,7 @@
       </el-table-column>
     </el-table>
     <ColumnDialog ref="ColumnDialog" @saveColumn="saveColumn"/>
+    <Notice :isNoticeVisible="isShowNotice" @closeNotice="closeNotice"/>
   </div>
 </template>
 
@@ -59,8 +64,9 @@
 import calcMethodsMixin from '~/mixins/calcMethodsMixin.js'
 import ColumnDialog from '~/components/ColumnDialog.vue'
 import DiffDispCell from '~/components/DiffDispCell.vue'
+import Notice from '~/components/Notice.vue'
 export default {
-  components : {ColumnDialog, DiffDispCell},
+  components : {ColumnDialog, DiffDispCell, Notice},
   mixins: [calcMethodsMixin],
   props : [
     'age',
@@ -166,7 +172,8 @@ export default {
           value1: '2',
           value2: '3',
         },
-      ]
+      ],
+      isShowNotice: false,
     }
   },
   methods : {
@@ -206,6 +213,13 @@ export default {
       this.tableData.forEach((column) => {
         column[dest] = current[column.key]
       })
+    },
+    showNotice () {
+      this.isShowNotice = true
+    },
+    closeNotice () {
+      this.isShowNotice = false
+      console.log("test")
     },
     showForm () {
       this.$emit('showform')
