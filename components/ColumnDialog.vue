@@ -36,10 +36,10 @@ export default {
           { max:6, message: '6文字くらいでお願いします',trigger: 'blur'}
         ],
         grossIncome:[
-          { pattern: /^[\+\-]?([1-9]\d*|0)$/, message: '数字を入力してください',trigger: 'blur'}
+          { pattern: /^[\+\-]?([1-9]\d*|0)$/, message: '数字を入力してください',trigger: 'submit'}
         ],
         commuterPassCostPerSix:[
-          { pattern: /^[\+\-]?([1-9]\d*|0)$/, message: '数字を入力してください',trigger: 'blur'}
+          { pattern: /^[\+\-]?([1-9]\d*|0)$/, message: '数字を入力してください',trigger: 'submit'}
         ],
         memo:[
           { max:50, message: '50文字以内でお願いします',trigger: 'blur'}
