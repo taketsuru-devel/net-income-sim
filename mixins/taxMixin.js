@@ -65,20 +65,22 @@ export default {
       //算出
       let incomeTax = 0
       if (incomeTaxBase <= 1950000 ) {
-        incomeTax = incomeBase * 0.05
+        incomeTax = incomeTaxBase * 0.05
       } else if (incomeTaxBase <= 3300000 ) {
-        incomeTax = incomeTaxBase * 0.1 + 97500
+        incomeTax = incomeTaxBase * 0.1 - 97500
       } else if (incomeTaxBase <= 6950000 ) {
-        incomeTax = incomeTaxBase * 0.2 + 427500
+        incomeTax = incomeTaxBase * 0.2 - 427500
       } else if (incomeTaxBase <= 9000000 ) {
-        incomeTax = incomeTaxBase * 0.23 + 636000
+        incomeTax = incomeTaxBase * 0.23 - 636000
       } else if (incomeTaxBase <= 18000000 ) {
-        incomeTax = incomeTaxBase * 0.33 + 1536000
+        incomeTax = incomeTaxBase * 0.33 - 1536000
       } else if (incomeTaxBase <= 40000000 ) {
-        incomeTax = incomeTaxBase * 0.40 + 1536000
+        incomeTax = incomeTaxBase * 0.40 - 1536000
       } else {
-        incomeTax = incomeBase * 0.45 - 4796000
+        incomeTax = incomeTaxBase * 0.45 - 4796000
       }
+      //復興特別所得税
+      incomeTax = incomeTax * 1.021
       return Math.floor(incomeTax / 12)
 		},
 		calcMunicipalTax (costs) {
