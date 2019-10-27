@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  props : ['grossIncome', 'commuterPassCostPerSix'],
+  props : ['grossIncome', 'commuterPassCostPerSix', 'age'],
   data () {
     return {
       initData: {
@@ -51,6 +51,7 @@ export default {
   mounted () {
     this.initData.grossIncome = this.grossIncome
     this.initData.commuterPassCostPerSix = this.commuterPassCostPerSix
+    this.initData.age = this.age
   }
 }
 </script>

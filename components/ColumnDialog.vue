@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="dialogVisible">
+  <el-dialog :visible.sync="dialogVisible" :close-on-click-modal="false">
     <el-form ref="column" :model="column" :rules="rules">
       <el-form-item prop="name" label="項目名">
         <el-input placeholder="例) 定期券区間変更、引っ越し" v-model="column.name"></el-input>

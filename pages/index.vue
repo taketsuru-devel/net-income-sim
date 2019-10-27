@@ -2,10 +2,10 @@
   <div class="container">
     <div v-if="!isTable">
       <p class="title">弊社が移転して定期代が変わると<br>手取りにどれだけ影響があるか算出できるフォーム</p>
-      <init-form :grossIncome="grossIncome" :commuterPassCostPerSix="commuterPassCostPerSix" @submitdata="showTable"/>
+      <init-form :grossIncome="grossIncome" :commuterPassCostPerSix="commuterPassCostPerSix" :age="age" @submitdata="showTable"/>
     </div>
     <div v-else>
-      <value-table :grossIncome="grossIncome" :commuterPassCostPerSix="commuterPassCostPerSix" @showform="showForm"/>
+      <value-table :grossIncome="grossIncome" :commuterPassCostPerSix="commuterPassCostPerSix" :age="age" @showform="showForm"/>
     </div>
   </div>
 </template>
