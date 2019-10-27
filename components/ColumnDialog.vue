@@ -28,7 +28,7 @@ export default {
       column: {
         name : '',
         grossIncome : 0,
-        commuterPassCost : 0,
+        commuterPassCostPerSix : 0,
         memo : ''
       },
       rules: {
