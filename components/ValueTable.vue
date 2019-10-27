@@ -17,6 +17,17 @@
         prop="type"
         label="項目"
         width="120">
+        <template slot-scope="scope">
+          <template v-if="scope.$index == 7">
+            {{ scope.row.type }}
+            <el-popover title="ほとんどの場合、給与明細の値と異なります" content="住民税天引き額は前年度の所得から計算されます。本フォームでは来年度の参考額となります。" placement="top-start" trigger="hover">
+              <el-badge value="注" slot="reference"/>
+            </el-popover>
+          </template>
+          <template v-else>
+            {{ scope.row.type }}
+          </template>
+        </template>
       </el-table-column>
       <el-table-column
         prop="value0"
