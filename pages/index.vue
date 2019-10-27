@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div v-if="!isTable">
+      <p class="title">弊社が移転して定期代が変わると<br>手取りにどれだけ影響があるか算出できるフォーム</p>
       <init-form :grossIncome="grossIncome" :commuterPassCostPerSix="commuterPassCostPerSix" @submitdata="showTable"/>
     </div>
     <div v-else>
@@ -54,7 +55,7 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 20px;
   color: #35495e;
   letter-spacing: 1px;
 }
