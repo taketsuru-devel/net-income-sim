@@ -31,7 +31,7 @@ export default {
           { type: 'integer', message: "現実味のない値を入れないでください", min:50000, max:1000000, required:true, trigger: 'blur'}
         ],
         commuterPassCostPerSix:[
-          { type: 'integer', message: "現実味のない値を入れないでください", min:0, max:1000000, required:true, trigger: 'blur'}
+          { type: 'integer', message: "90万までの正の数です", min:0, max:150000*6, required:true, trigger: 'blur'}
         ],
       },
     }
