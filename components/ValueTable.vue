@@ -241,7 +241,6 @@ export default {
     },
     closeNotice () {
       this.isShowNotice = false
-      console.log("test")
     },
     showForm () {
       this.$emit('showform')
