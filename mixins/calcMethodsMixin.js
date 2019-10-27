@@ -14,15 +14,16 @@ export default {
         return null
       }
     },
-    calcAll (grossIncome, grossDiff, commuterPassCost, commuterDiff, age) {
+    calcAll (grossIncome, grossDiff, commuterPassCostPerSix, commuterDiff, age) {
       const gross = Math.min(this.evalDiff(grossIncome, grossDiff), 1000000)
-      const commuterPass = Math.min(this.evalDiff(commuterPassCost, commuterDiff), 150000)
-      if (gross === null || commuterPass === null) {
+      const commuterPassPerSix = Math.min(this.evalDiff(commuterPassCostPerSix, commuterDiff), 150000)
+      if (gross === null || commuterPassPerSix === null) {
         return {}
       }
       let ret = {
         'grossIncome' : gross,
-        'commuterPassCost' : commuterPass,
+        'commuterPassCostPerSix' : commuterPassPerSix,
+        'commuterPassCost' : Math.floor(commuterPassPerSix / 6),
       }
       //雇用保険、厚生保険、健康保険
       Object.assign(ret, this.calcInsurance(ret, false, age))

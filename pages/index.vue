@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div v-if="!isTable">
-      <init-form :grossIncome="grossIncome" :commuterPassCost="commuterPassCost" @submitdata="showTable"/>
+      <init-form :grossIncome="grossIncome" :commuterPassCostPerSix="commuterPassCostPerSix" @submitdata="showTable"/>
     </div>
     <div v-else>
-      <value-table :grossIncomeValue="grossIncome" :commuterPassCostValue="commuterPassCost" @showform="showForm"/>
+      <value-table :grossIncome="grossIncome" :commuterPassCostPerSix="commuterPassCostPerSix" @showform="showForm"/>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       grossIncome: 0,
-      commuterPassCost: 0,
+      commuterPassCostPerSix: 0,
       age : 30,
       isTable : false,
     }
@@ -31,7 +31,7 @@ export default {
     },
 		showTable (initData) {
       this.grossIncome = initData.grossIncome
-      this.commuterPassCost = initData.commuterPassCost
+      this.commuterPassCostPerSix = initData.commuterPassCostPerSix
       this.age = initData.age
 			this.isTable = true
     }

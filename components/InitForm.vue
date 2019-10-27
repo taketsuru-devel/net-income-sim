@@ -3,8 +3,8 @@
     <el-form-item label="標準報酬月額" prop="grossIncome">
       <el-input v-model.lazy.number="initData.grossIncome"/>
     </el-form-item>
-    <el-form-item label="6ヵ月定期代の1ヵ月相当額" prop="commuterPassCost">
-      <el-input v-model.lazy.number="initData.commuterPassCost"/>
+    <el-form-item label="6ヵ月定期代" prop="commuterPassCostPerSix">
+      <el-input v-model.lazy.number="initData.commuterPassCostPerSix"/>
     </el-form-item>
     <el-form-item label="年齢" prop="age">
       <el-input v-model.lazy.number="initData.age"/>
@@ -15,12 +15,12 @@
 
 <script>
 export default {
-  props : ['grossIncome', 'commuterPassCost'],
+  props : ['grossIncome', 'commuterPassCostPerSix'],
   data () {
     return {
       initData: {
         grossIncome : 0,
-        commuterPassCost : 0,
+        commuterPassCostPerSix : 0,
         age : 30,
       },
       rules: {
@@ -30,8 +30,8 @@ export default {
         grossIncome:[
           { type: 'integer', message: "現実味のない値を入れないでください", min:50000, max:1000000, required:true, trigger: 'blur'}
         ],
-        commuterPassCost:[
-          { type: 'integer', message: "現実味のない値を入れないでください", min:0, max:150000, required:true, trigger: 'blur'}
+        commuterPassCostPerSix:[
+          { type: 'integer', message: "現実味のない値を入れないでください", min:0, max:1000000, required:true, trigger: 'blur'}
         ],
       },
     }
@@ -50,7 +50,7 @@ export default {
   },
   mounted () {
     this.initData.grossIncome = this.grossIncome
-    this.initData.commuterPassCost = this.commuterPassCost
+    this.initData.commuterPassCostPerSix = this.commuterPassCostPerSix
   }
 }
 </script>

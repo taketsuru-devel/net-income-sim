@@ -7,8 +7,8 @@
       <el-form-item prop="grossIncome" label="報酬変動額">
         <el-input placeholder="例) 200000:そのまま適応、+1000,-1000:差分を適応" v-model="column.grossIncome"></el-input>
       </el-form-item>
-      <el-form-item prop="commuterPassCost" label="交通費変動額">
-        <el-input placeholder="例) 200000:そのまま適応、+1000,-1000:差分を適応" v-model="column.commuterPassCost"></el-input>
+      <el-form-item prop="commuterPassCostPerSix" label="6ヶ月定期代変動額">
+        <el-input placeholder="例) 200000:そのまま適応、+1000,-1000:差分を適応" v-model="column.commuterPassCostPerSix"></el-input>
       </el-form-item>
       <el-form-item prop="memo" label="メモ">
         <el-input placeholder="項目名で書ききれないことをここに" v-model="column.memo"></el-input>
@@ -38,7 +38,7 @@ export default {
         grossIncome:[
           { pattern: /^[\+\-]?([1-9]\d*|0)$/, message: '数字を入力してください',trigger: 'blur'}
         ],
-        commuterPassCost:[
+        commuterPassCostPerSix:[
           { pattern: /^[\+\-]?([1-9]\d*|0)$/, message: '数字を入力してください',trigger: 'blur'}
         ],
         memo:[

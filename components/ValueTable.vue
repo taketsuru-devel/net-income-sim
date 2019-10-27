@@ -10,7 +10,7 @@
         width="80">
         <template slot-scope="scope">
           {{scope.row.group}}
-          <el-button icon="el-icon-search" v-if="scope.$index == 2" @click="showNotice"/>
+          <el-button icon="el-icon-search" v-if="scope.$index == 3" @click="showNotice"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -70,26 +70,27 @@ export default {
   mixins: [calcMethodsMixin],
   props : [
     'age',
-    'grossIncomeValue',
-    'commuterPassCostValue',
+    'grossIncome',
+    'commuterPassCostPerSix',
   ],
   data () {
     return {
       tableKeys : [
-        'grossIncome',         //月額報酬
-        'commuterPassCost',    //交通費
-        'employmentInsurance', //雇用保険
-        'welfarePension',      //厚生年金
-        'healthInsurance',     //健康保険
-        'incomeTax',           //所得税
-        'municipalTax',        //住民税
-        'netIncome',           //手取り
-        'netIncomeWithoutCom', //手取り(交通費除外)
-        'companyCost' //会社支出
+        'grossIncome',            //月額報酬
+        'commuterPassCostPerSix', //交通費(6ヶ月)
+        'commuterPassCost',       //交通費
+        'employmentInsurance',    //雇用保険
+        'welfarePension',         //厚生年金
+        'healthInsurance',        //健康保険
+        'incomeTax',              //所得税
+        'municipalTax',           //住民税
+        'netIncome',              //手取り
+        'netIncomeWithoutCom',    //手取り(交通費除外)
+        'companyCost'             //会社支出
       ],
       columnData : [
-        {name : 'カスタム1', grossIncome:'', commuterPassCost:'', memo:'', _column:'value1'},
-        {name : 'カスタム2', grossIncome:'', commuterPassCost:'', memo:'', _column:'value2'},
+        {name : 'カスタム1', grossIncome:'', commuterPassCostPerSix:'', memo:'', _column:'value1'},
+        {name : 'カスタム2', grossIncome:'', commuterPassCostPerSix:'', memo:'', _column:'value2'},
       ],
       tableData: [
         {
@@ -101,9 +102,17 @@ export default {
           value2: '',
         },
         {
+          key: 'commuterPassCostPerSix',
+          group: '額面',
+          type: '6ヵ月定期代',
+          value0: '',
+          value1: '',
+          value2: '',
+        },
+        {
           key: 'commuterPassCost',
           group: '額面',
-          type: '1ヵ月交通費',
+          type: '定期代1ヵ月分',
           value0: '',
           value1: '',
           value2: '',
@@ -182,10 +191,10 @@ export default {
       if (columnIndex === 0) {
         if (rowIndex  == 0) {
           return {
-            rowspan: 2,
+            rowspan: 3,
             colspan: 1
           };
-        } else if (rowIndex == 2) {
+        } else if (rowIndex == 3) {
           return {
             rowspan: 5,
             colspan: 1
@@ -230,15 +239,15 @@ export default {
     saveColumn (column, idx) { //from child
       this.columnData[idx]['name'] = column.name
       this.columnData[idx]['grossIncome'] = column.grossIncome
-      this.columnData[idx]['commuterPassCost'] = column.commuterPassCost
+      this.columnData[idx]['commuterPassCostPerSix'] = column.commuterPassCostPerSix
       this.columnData[idx]['memo'] = column.memo
-      this.updateColumn(this.grossIncomeValue, this.columnData[idx]['grossIncome'], this.commuterPassCostValue, this.columnData[idx]['commuterPassCost'], this.columnData[idx]['_column'])
+      this.updateColumn(this.grossIncome, this.columnData[idx]['grossIncome'], this.commuterPassCostPerSix, this.columnData[idx]['commuterPassCostPerSix'], this.columnData[idx]['_column'])
     },
   },
   mounted () {
-    this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value0')
-    this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value1')
-    this.updateColumn(this.grossIncomeValue, null, this.commuterPassCostValue, null, 'value2')
+    this.updateColumn(this.grossIncome, null, this.commuterPassCostPerSix, null, 'value0')
+    this.updateColumn(this.grossIncome, null, this.commuterPassCostPerSix, null, 'value1')
+    this.updateColumn(this.grossIncome, null, this.commuterPassCostPerSix, null, 'value2')
   }
 }
 </script>
