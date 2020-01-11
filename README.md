@@ -1,8 +1,11 @@
 # net-income-sim
 
-> My prime Nuxt.js project
+> 額面や交通費が変わった時の手取り計算フォーム 
+
+検算していなかったり細かい控除は反映できていないので鵜呑みにしないでください
 
 ## Build Setup
+デフォルトそのまま
 
 ``` bash
 # install dependencies
@@ -19,4 +22,4 @@ $ npm run start
 $ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
